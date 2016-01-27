@@ -3,6 +3,7 @@
 import PIL
 from PIL import Image
 import argparse
+import math
 import os
 
 ios_sizes = {
@@ -18,8 +19,8 @@ def generate_image(image, phone, size):
     path = os.path.dirname(image)
     old_width, old_height = im.size
     new_width, new_height = size
-    resize_height = int(old_height * new_width / float(old_width))
-    
+    resize_height = int(math.ceil(old_height * new_width / float(old_width)))
+
     im = im.resize((new_width, resize_height), Image.ANTIALIAS)
     im = im.crop((0, 0, new_width, new_height))
     im.save("%s/%s-%s.png" % (path, name, phone), "PNG")
